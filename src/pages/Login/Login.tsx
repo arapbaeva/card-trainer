@@ -6,13 +6,13 @@ const axiosInstance = axios.create({
 })
 
 export const Login = () => {
-    useEffect(()=>{
-        axiosInstance.post(`/register`).then(res=>res.data)
-    }, [])
+    // useEffect(()=>{
+    //     axiosInstance.post(`/register`).then(res=>res.data)
+    // }, [])
 
     return (
         <>
-            
+            <div>LOGIN</div>
         </>
     )
 };

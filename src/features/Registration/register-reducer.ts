@@ -1,3 +1,7 @@
+import {RegisterParamsType, registerUserAPI} from "../../api/register-user-api";
+import {Dispatch} from "redux";
+import {setAppStatusAC, SetAppStatusActionType} from "../../app/app-reducer";
+
 
 export const SET_IS_REGISTER_IN = 'SET-IS-REGISTER-IN';
 const initialState = {
@@ -22,20 +26,30 @@ export const setIsRegisterInAC = (userData: boolean) =>({
     userData
 })
 
-// export const registerTC = (data: LoginParamsType) =>(dispatch: Dispatch<ActionsType>) =>{
-//     dispatch(setAppStatusAC("loading"))
-//     authAPI.login(data)
-//         .then((res) => {
-//             if (res.data.resultCode === 0) {
-//                 dispatch(setIsLoggedInAC(true))
-//                 dispatch(setAppStatusAC('succeeded'))
-//             } else {
-//                 handleServerAppError(res.data, dispatch);
-//             }
-//         })
-//         .catch((error) => {
-//             handleServerNetworkError(error, dispatch)
-//         })
+
+export const registerTC = (data: RegisterParamsType) =>  (dispatch: Dispatch<ActionsType>) =>{
+        dispatch(setAppStatusAC("loading"))
+        registerUserAPI.register(data)
+            .then((res)=>{
+        dispatch(setIsRegisterInAC(true))
+        dispatch(setAppStatusAC('succeeded'))
+    })
+    .catch((error) =>{
+        console.log(error)
+    })
+}
+
+
+//
+// export const registerTC = (data: RegisterParamsType) => async  (dispatch: Dispatch<ActionsType>) =>{
+//    try {
+//        dispatch(setAppStatusAC("loading"))
+//        await  registerUserAPI.register(data)
+//        dispatch(setIsRegisterInAC(true))
+//        dispatch(setAppStatusAC('succeeded'))
+//    } catch(error) {
+//        console.log(error)
+//         }
 // }
 
-type ActionsType = ReturnType<typeof setIsRegisterInAC>
+type ActionsType = ReturnType<typeof setIsRegisterInAC> | SetAppStatusActionType
